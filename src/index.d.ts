@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import {
-  ViewStyle,
   Insets,
-  PointPropType,
-  NativeSyntheticEvent,
   NativeScrollEvent,
+  NativeSyntheticEvent,
+  PointPropType,
+  ViewStyle,
 } from 'react-native';
 
 export type FontWeight =
@@ -137,6 +137,7 @@ export enum CellSelectionStyle {
 }
 
 export interface SectionProps {
+  children?: React.ReactNode;
   /**
    * Show the DisclosureIndicator accessory type
    */
@@ -174,6 +175,7 @@ export interface SectionProps {
 }
 
 export interface ItemProps {
+  children?: React.ReactNode;
   /**
    * This value will be returned on event callbacks
    */
@@ -226,6 +228,7 @@ export interface ItemProps {
 }
 
 export interface TableViewProps {
+  children?: React.ReactNode;
   style?: ViewStyle;
   tableViewStyle?: TableViewStyle;
   tableViewCellStyle?: TableViewCellStyle;

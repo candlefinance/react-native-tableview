@@ -263,6 +263,14 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 }
 
 -(void)startRefreshing {
+    CGPoint currentOffset = self.tableView.contentOffset;
+    if (CGPointEqualToPoint(currentOffset, CGPointZero)) {
+        [self.tableView setContentOffset:CGPointMake(0.0f, -30.0f) animated:YES];
+    } else {
+        if (currentOffset.y > CGPointZero.y) {
+            [self.tableView setContentOffset:CGPointMake(0.0f, -30.0f) animated:YES];
+        }
+    }
     [self.tableView.refreshControl beginRefreshing];
 }
 
@@ -436,19 +444,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger count = [_sections[section][@"items"] count];
-    // if we have custom cells, additional processing is necessary
-    if ([self hasCustomCells:section]){
-        if ([_cells count]<=section){
-            return 0;
-        }
-        // don't display cells until their's height is not calculated (TODO: maybe it is possible to optimize??)
-        for (RNCellView *view in _cells[section]){
-            if (!view.componentHeight){
-                return 0;
-            }
-        }
-        count = [_cells[section] count];
-    }
+    _sections[section][@"count"] = @(count);
     return count;
 }
 
@@ -515,7 +511,12 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 }
 
 -(NSMutableDictionary *)dataForRow:(NSInteger)row section:(NSInteger)section {
-    return (NSMutableDictionary *)_sections[section][@"items"][row];
+    if (section < [_sections count] &&
+        row < [_sections[section][@"items"] count]) {
+       return (NSMutableDictionary *)_sections[section][@"items"][row];
+    } else {
+       return nil;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

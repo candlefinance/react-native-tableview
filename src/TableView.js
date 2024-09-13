@@ -1,18 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {
-  NativeModules,
-  requireNativeComponent,
   EdgeInsetsPropType,
-  PointPropType,
   findNodeHandle,
+  NativeModules,
+  PointPropType,
+  requireNativeComponent,
   View,
 } from 'react-native';
-import TableViewSection from './TableViewSection';
 import TableViewCell from './TableViewCell';
-import TableViewItem from './TableViewItem';
 import RNTableViewConsts from './TableViewConsts';
-import ViewPropTypes from './util/ViewPropTypes';
+import TableViewItem from './TableViewItem';
+import TableViewSection from './TableViewSection';
 
 const resolveAssetSource = require('react-native/Libraries/Image/resolveAssetSource');
 
@@ -179,7 +178,7 @@ class TableView extends React.Component {
     tableViewStyle: PropTypes.number,
     tableViewCellStyle: PropTypes.number,
     tableViewCellEditingStyle: PropTypes.number,
-    style: ViewPropTypes.style,
+    // style: ViewPropTypes.style,
     refreshing: PropTypes.bool,
     onRefresh: PropTypes.func,
     canRefresh: PropTypes.bool,
@@ -372,7 +371,7 @@ class TableView extends React.Component {
     return (
       <View style={[{ flex: 1 }, this.props.style]}>
         <RNTableView
-          ref={ref => {
+          ref={(ref) => {
             this.tableView = ref;
           }}
           sections={this.state.sections}
